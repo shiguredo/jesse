@@ -21,13 +21,6 @@
 %% @end
 %%%=============================================================================
 
-%% Maps conditional compilation
--ifdef(erlang_deprecated_types).
--define(IF_MAPS(Exp), ).
--else.
--define(IF_MAPS(Exp), Exp).
--endif.
-
 %% Use optimization for sets if available
 %% OTP 24 or higher
 -define(SET_FROM_LIST(List), sets:from_list(List, [{version, 2}])).

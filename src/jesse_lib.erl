@@ -38,10 +38,6 @@
 %% Includes
 -include("jesse_schema_validator.hrl").
 
--ifdef(WORKAROUND_FOR_EFMT).
--define(IF_MAPS(A), A).
--endif.
-
 
 %%% API
 %% @doc Returns an empty list if the given value is ?not_found.
@@ -69,15 +65,11 @@ is_array(_) ->
 %% 3) jsx format (`[{binary() | atom(), any()}]')
 %% Returns `true' if the given data is an object, otherwise `false' is returned.
 -spec is_json_object(Value :: any()) -> boolean().
-?IF_MAPS(
-  is_json_object(Map)
-  when erlang:is_map(Map) ->
-  true;)
-is_json_object({struct, Value})
-  when is_list(Value) ->
+is_json_object(Map) when is_map(Map) ->
     true;
-is_json_object({Value})
-  when is_list(Value) ->
+is_json_object({struct, Value}) when is_list(Value) ->
+    true;
+is_json_object({Value}) when is_list(Value) ->
     true;
 %% handle `jsx' empty objects
 is_json_object([{}]) ->

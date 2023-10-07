@@ -54,10 +54,6 @@
 -include_lib("kernel/include/file.hrl").
 -include("jesse_schema_validator.hrl").
 
--ifdef(WORKAROUND_FOR_EFMT).
--define(IF_MAPS(A), A).
--endif.
-
 
 %%% API
 %% @doc Adds a schema definition `Schema' to the internal storage associated
@@ -232,10 +228,8 @@ store_schema(SchemaInfo, {Acc, ValidationFun}) ->
 %% Should support whatever jesse_lib:is_json_object/1 does
 
 
-?IF_MAPS(
-  replace_schema_id(M0, IdKey, Id)
-  when erlang:is_map(M0) ->
-  maps:put(IdKey, unicode:characters_to_binary(Id), M0);)
+replace_schema_id(M0, IdKey, Id) when is_map(M0) ->
+    maps:put(IdKey, unicode:characters_to_binary(Id), M0);
 replace_schema_id({struct, P0}, IdKey, Id)
   when is_list(P0) ->
     P = [{IdKey, unicode:characters_to_binary(Id)} | lists:keydelete(IdKey, 1, P0)],
