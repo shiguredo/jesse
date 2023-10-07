@@ -2,6 +2,10 @@
 
 ## develop
 
+- [CHANGE] jsone を追加
+  - @voluntas
+- [CHANGE] rfc3339 を削除
+  - @voluntas
 - [CHANGE] ci.yml を書き換え
   - @voluntas
 - [CHANGE] make ci を追加
