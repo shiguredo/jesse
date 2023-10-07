@@ -108,7 +108,7 @@ main(Args) ->
 %% there is any.
 -spec add_schema(Key :: string(),
                  Schema :: schema()) -> ok |
-                                        jesse_error:error().
+                                        jesse_database:store_result().
 add_schema(Key, Schema) ->
     ValidationFun = fun jesse_lib:is_json_object/1,
     jesse_database:add(Key, Schema, ValidationFun).
@@ -120,6 +120,7 @@ add_schema(Key, Schema) ->
 -spec add_schema(Key :: string(),
                  Schema :: binary(),
                  Options :: options()) -> ok |
+                                          jesse_database:store_result() |
                                           jesse_error:error().
 add_schema(Key, Schema, Options) ->
     try

@@ -102,8 +102,8 @@ is_null(_Value) ->
 %% @doc Run the RE against the subject using the `re_options' from the jesse
 %% application environment. `{capture, none}' is always used.
 -spec re_run(Subject :: iodata() | unicode:charlist(),
-             RE :: iodata() | unicode:charlist()) -> match |
-                                                     nomatch.
+             RE :: iodata() | unicode:charlist()) ->
+          {match, [{integer(), integer()}]} | match | nomatch | {error, term()}.
 re_run(Subject, RE) ->
     re:run(Subject, RE, [{capture, none} | re_options()]).
 
