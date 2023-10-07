@@ -67,7 +67,7 @@ run(Options, [Schema | _] = Schemata, [JsonInstance | JsonInstances]) ->
                      [{filename, list_to_binary(JsonInstance)},
                       {result, ok}];
                  {error, Reasons} ->
-                     JsxReasons = lists:map(fun jesse_error:reason_to_jsx/1, Reasons),
+                     JsxReasons = lists:map(fun jesse_error:reason_to_jsone/1, Reasons),
                      [{filename, list_to_binary(JsonInstance)},
                       {result, error},
                       {errors, JsxReasons}]
@@ -76,7 +76,7 @@ run(Options, [Schema | _] = Schemata, [JsonInstance | JsonInstances]) ->
         undefined ->
             io:fwrite("~p\n\n", [Result]);
         true ->
-            io:fwrite("~s\n\n", [jsx:encode(Result)])
+            io:fwrite("~s\n\n", [jsone:encode(Result)])
     end,
     case JesseResult of
         {ok, _} ->
@@ -92,7 +92,7 @@ jesse_run(JsonInstance, Schema, Schemata) ->
     {ok, _} = application:ensure_all_started(jesse),
     ok = add_schemata(Schemata),
     {ok, JsonInstanceBinary} = file:read_file(JsonInstance),
-    JsonInstanceJsx = jsx:decode(JsonInstanceBinary, [{return_maps, false}]),
+    JsonInstanceJsx = jsone:decode(JsonInstanceBinary, [{object_format, proplist}]),
     jesse:validate(Schema,
                    JsonInstanceJsx).
 
@@ -101,7 +101,7 @@ add_schemata([]) ->
     ok;
 add_schemata([SchemaFile | Rest]) ->
     {ok, SchemaBin} = file:read_file(SchemaFile),
-    Schema0 = jsx:decode(SchemaBin, [{return_maps, false}]),
+    Schema0 = jsone:decode(SchemaBin, [{object_format, proplist}]),
     Schema = maybe_fill_schema_id(SchemaFile, Schema0),
     ok = jesse:add_schema(SchemaFile, Schema),
     add_schemata(Rest).
