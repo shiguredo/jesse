@@ -76,8 +76,8 @@
 -define(STRING,  <<"string">>).
 
 %% Supported $schema attributes
--define(json_schema_draft6,        <<"http://json-schema.org/draft-06/schema#">>).
--define(default_schema_ver,        ?json_schema_draft6).
+-define(JSON_SCHEMA_DRAFT6,        <<"http://json-schema.org/draft-06/schema#">>).
+-define(DEFAULT_SCHEMA_VER,        ?JSON_SCHEMA_DRAFT6).
 -define(default_schema_loader_fun, fun jesse_database:load_uri/1).
 -define(default_error_handler_fun, fun jesse_error:default_error_handler/3).
 

@@ -133,7 +133,7 @@ new(JsonSchema, Options) ->
                                         0),
     MetaSchemaVer = jesse_json_path:value(?SCHEMA,
                                           JsonSchema,
-                                          ?default_schema_ver),
+                                          ?DEFAULT_SCHEMA_VER),
     DefaultSchemaVer = proplists:get_value(default_schema_ver,
                                            Options,
                                            MetaSchemaVer),
@@ -187,7 +187,7 @@ set_current_schema(#state{id = Id} = State, NewSchema0) ->
                 [{?REF, Ref} | lists:keydelete(?REF, 1, ListSchema)]
         end,
     IdTag = case schema_from_json(NewSchema) of
-                ?json_schema_draft6 -> ?ID;
+                ?JSON_SCHEMA_DRAFT6 -> ?ID;
                 _ -> ?ID_OLD
             end,
     NewSchemaId = jesse_json_path:value(IdTag, NewSchema, undefined),
@@ -197,7 +197,7 @@ set_current_schema(#state{id = Id} = State, NewSchema0) ->
 
 schema_from_json(JsonSchema) ->
     case jesse_json_path:value(?SCHEMA, JsonSchema, ?not_found) of
-        ?not_found -> ?default_schema_ver;
+        ?not_found -> ?DEFAULT_SCHEMA_VER;
         SchemaVer -> SchemaVer
     end.
 

@@ -396,34 +396,34 @@ data_exclusive_maximum_minimum_test() ->
     ?assertEqual(
       {ok, ValidNumber},
       jesse_schema_validator:validate(
-        Schema(<<"exclusiveMaximum">>, ?json_schema_draft6), ValidNumber, [])),
+        Schema(<<"exclusiveMaximum">>, ?JSON_SCHEMA_DRAFT6), ValidNumber, [])),
 
     ?assertEqual(
       {ok, ValidNumber + 2},
       jesse_schema_validator:validate(
-        Schema(<<"exclusiveMinimum">>, ?json_schema_draft6), ValidNumber + 2, [])),
+        Schema(<<"exclusiveMinimum">>, ?JSON_SCHEMA_DRAFT6), ValidNumber + 2, [])),
 
     ?assertThrow([{data_invalid,
-                   {[{<<"$schema">>, ?json_schema_draft6},
+                   {[{<<"$schema">>, ?JSON_SCHEMA_DRAFT6},
                      {<<"type">>, <<"number">>},
                      {<<"exclusiveMinimum">>, 43}]},
                    not_in_range,
                    42,
                    []}],
                  jesse_schema_validator:validate(
-                   Schema(<<"exclusiveMinimum">>, ?json_schema_draft6),
+                   Schema(<<"exclusiveMinimum">>, ?JSON_SCHEMA_DRAFT6),
                    ValidNumber,
                    [])),
 
     ?assertThrow([{data_invalid,
-                   {[{<<"$schema">>, ?json_schema_draft6},
+                   {[{<<"$schema">>, ?JSON_SCHEMA_DRAFT6},
                      {<<"type">>, <<"number">>},
                      {<<"exclusiveMaximum">>, 43}]},
                    not_in_range,
                    44,
                    []}],
                  jesse_schema_validator:validate(
-                   Schema(<<"exclusiveMaximum">>, ?json_schema_draft6),
+                   Schema(<<"exclusiveMaximum">>, ?JSON_SCHEMA_DRAFT6),
                    ValidNumber + 2,
                    [])).
 
@@ -443,16 +443,16 @@ data_dollarid_test() ->
                      {<<"id">>, <<"foo">>}]},
                    wrong_draft6_id_tag}],
                  jesse_schema_validator:validate(
-                   SchemaWithId(?json_schema_draft6, <<"id">>), Object, [])),
+                   SchemaWithId(?JSON_SCHEMA_DRAFT6, <<"id">>), Object, [])),
 
     ?assertEqual(
       {ok, Object},
       jesse_schema_validator:validate(
-        SchemaWithId(?json_schema_draft6, <<"$id">>), Object, [])).
+        SchemaWithId(?JSON_SCHEMA_DRAFT6, <<"$id">>), Object, [])).
 
 
 data_contains_test() ->
-    Schema = {[{<<"$schema">>, ?json_schema_draft6},
+    Schema = {[{<<"$schema">>, ?JSON_SCHEMA_DRAFT6},
                {<<"type">>, <<"array">>},
                {<<"contains">>,
                 {[{<<"type">>, <<"number">>}]}}]},
@@ -463,7 +463,7 @@ data_contains_test() ->
       jesse_schema_validator:validate(Schema, Array, [])),
 
     ?assertThrow([{data_invalid,
-                   {[{<<"$schema">>, ?json_schema_draft6},
+                   {[{<<"$schema">>, ?JSON_SCHEMA_DRAFT6},
                      {<<"type">>, <<"array">>},
                      {<<"contains">>,
                       {[{<<"type">>, <<"number">>}]}}]},
@@ -474,7 +474,7 @@ data_contains_test() ->
 
 
 data_const_test() ->
-    Schema = {[{<<"$schema">>, ?json_schema_draft6},
+    Schema = {[{<<"$schema">>, ?JSON_SCHEMA_DRAFT6},
                {<<"type">>, <<"string">>},
                {<<"const">>, <<"foo">>}]},
 
@@ -482,7 +482,7 @@ data_const_test() ->
       {ok, <<"foo">>},
       jesse_schema_validator:validate(Schema, <<"foo">>, [])),
     ?assertThrow([{data_invalid,
-                   {[{<<"$schema">>, ?json_schema_draft6},
+                   {[{<<"$schema">>, ?JSON_SCHEMA_DRAFT6},
                      {<<"type">>, <<"string">>},
                      {<<"const">>, <<"foo">>}]},
                    not_in_enum,
@@ -492,7 +492,7 @@ data_const_test() ->
 
 
 data_empty_required_test() ->
-    Schema = {[{<<"$schema">>, ?json_schema_draft6},
+    Schema = {[{<<"$schema">>, ?JSON_SCHEMA_DRAFT6},
                {<<"type">>, <<"object">>},
                {<<"required">>, []}]},
 
@@ -502,7 +502,7 @@ data_empty_required_test() ->
 
 
 data_empty_dependencies_test() ->
-    Schema = {[{<<"$schema">>, ?json_schema_draft6},
+    Schema = {[{<<"$schema">>, ?JSON_SCHEMA_DRAFT6},
                {<<"type">>, <<"object">>},
                {<<"dependencies">>, []}]},
 
@@ -512,7 +512,7 @@ data_empty_dependencies_test() ->
 
 
 array_items_with_boolean_value_test() ->
-    Schema = {[{<<"$schema">>, ?json_schema_draft6},
+    Schema = {[{<<"$schema">>, ?JSON_SCHEMA_DRAFT6},
                {<<"type">>, <<"array">>},
                {<<"items">>, true}]},
 
@@ -520,7 +520,7 @@ array_items_with_boolean_value_test() ->
       {ok, []},
       jesse_schema_validator:validate(Schema, [], [])),
 
-    InvalidSchema = {[{<<"$schema">>, ?json_schema_draft6},
+    InvalidSchema = {[{<<"$schema">>, ?JSON_SCHEMA_DRAFT6},
                       {<<"type">>, <<"array">>},
                       {<<"items">>, false}]},
 
@@ -532,7 +532,7 @@ array_items_with_boolean_value_test() ->
 
 
 contains_with_boolean_value_test() ->
-    Schema = {[{<<"$schema">>, ?json_schema_draft6},
+    Schema = {[{<<"$schema">>, ?JSON_SCHEMA_DRAFT6},
                {<<"type">>, <<"array">>},
                {<<"contains">>, true}]},
     Array = [<<"foo">>, 42],
@@ -540,7 +540,7 @@ contains_with_boolean_value_test() ->
       {ok, Array},
       jesse_schema_validator:validate(Schema, Array, [])),
 
-    InvalidSchema = {[{<<"$schema">>, ?json_schema_draft6},
+    InvalidSchema = {[{<<"$schema">>, ?JSON_SCHEMA_DRAFT6},
                       {<<"type">>, <<"array">>},
                       {<<"contains">>, false}]},
     ?assertThrow([{data_invalid,

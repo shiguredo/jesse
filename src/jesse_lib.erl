@@ -248,7 +248,7 @@ compare_properties(Value1, Value2) ->
 -spec get_schema_id_key(Schema :: jesse:json_term()) -> binary().
 get_schema_id_key(Schema) ->
     case jesse_json_path:value(?SCHEMA, Schema, undefined) of
-        ?json_schema_draft6 -> ?ID;
+        ?JSON_SCHEMA_DRAFT6 -> ?ID;
         _ -> ?ID_OLD
     end.
 
