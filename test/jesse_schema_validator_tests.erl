@@ -19,6 +19,7 @@
 %%%=============================================================================
 
 -module(jesse_schema_validator_tests).
+
 -include_lib("eunit/include/eunit.hrl").
 -include_lib("jesse_schema_validator.hrl").
 
@@ -271,10 +272,6 @@ data_invalid_any_of_test_draft(URI) ->
         Json,
         []}],
       jesse_schema_validator:validate(Schema, Json, [])).
-
-
--ifndef(erlang_deprecated_types).
--ifndef(COMMON_TEST).  % see Emakefile
 
 
 map_schema_test() ->
@@ -552,7 +549,3 @@ contains_with_boolean_value_test() ->
                    [],
                    []}],
                  jesse_schema_validator:validate(InvalidSchema, [], [])).
-
-
--endif.
--endif.
