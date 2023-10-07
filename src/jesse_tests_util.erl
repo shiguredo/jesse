@@ -35,8 +35,6 @@
 -define(TESTS,       <<"tests">>).
 -define(VALID,       <<"valid">>).
 
--define(EXCEPTION(C, R, Stacktrace), C:R:Stacktrace ->).
-
 %%% API
 
 
@@ -107,11 +105,11 @@ test_schema(DefaultSchema, Opts0, Schema, SchemaTests) ->
                                           error({unexpected_error, GotErrors})
                                   end
                           catch
-                              ?EXCEPTION(C, R, Stacktrace)
-                                                          ct:pal("Error: ~p:~p~n"
-                                                                 "Stacktrace: ~p~n",
-                                                                 [C, R, Stacktrace]),
-                                                          erlang:raise(C, R, Stacktrace)
+                              C:R:Stacktrace ->
+                                  ct:pal("Error: ~p:~p~n"
+                                         "Stacktrace: ~p~n",
+                                         [C, R, Stacktrace]),
+                                  erlang:raise(C, R, Stacktrace)
                           end
                   end,
                   SchemaTests).
