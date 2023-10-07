@@ -1,13 +1,7 @@
-.                   #*
 /*.coverdata
 /*.plt
+
 /_build/
-/bin
-/doc/*.html
-/doc/edoc-info
-/doc/erlang.png
-/doc/stylesheet.css
-/ebin
+
 /erl_crash.dump
 /rebar3.crashdump
-/test/*.beam
