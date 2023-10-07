@@ -64,7 +64,7 @@
                             AllowedErrors :: jesse:allowed_errors()) -> [error_reason()] | no_return().
 default_error_handler(Error, ErrorList0, AllowedErrors) ->
     ErrorList = ErrorList0 ++ [Error],
-    case AllowedErrors > length(ErrorList0) orelse AllowedErrors =:= ?infinity of
+    case AllowedErrors > length(ErrorList0) orelse AllowedErrors =:= ?INFINITY of
         true ->
             ErrorList;
         false ->

@@ -40,9 +40,9 @@
 
 
 %%% API
-%% @doc Returns an empty list if the given value is ?not_found.
+%% @doc Returns an empty list if the given value is ?NOT_FOUND.
 -spec empty_if_not_found(Value :: any()) -> any().
-empty_if_not_found(?not_found) ->
+empty_if_not_found(?NOT_FOUND) ->
     [];
 empty_if_not_found(Value) ->
     Value.
@@ -234,7 +234,7 @@ compare_objects(Value1, Value2) ->
 compare_properties(Value1, Value2) ->
     lists:all(fun({PropertyName1, PropertyValue1}) ->
                       case get_value(PropertyName1, Value2) of
-                          ?not_found -> false;
+                          ?NOT_FOUND -> false;
                           PropertyValue2 ->
                               is_equal(PropertyValue1,
                                        PropertyValue2)
@@ -279,7 +279,7 @@ get_schema_id(Schema, Default) ->
 %% Wrappers
 %% @private
 get_value(Key, Schema) ->
-    jesse_json_path:value(Key, Schema, ?not_found).
+    jesse_json_path:value(Key, Schema, ?NOT_FOUND).
 
 
 %% @private

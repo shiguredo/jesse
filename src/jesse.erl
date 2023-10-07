@@ -50,7 +50,7 @@
 
 %% Internal datastructures
 -type allowed_errors() :: non_neg_integer() |
-                          ?infinity.
+                          ?INFINITY.
 
 -type error_handler() :: fun((jesse_error:error_reason(),
                               [jesse_error:error_reason()],
@@ -80,7 +80,7 @@
 
 -type schema_loader_fun() :: fun((string()) -> {ok, schema()} |
                                                schema() |
-                                               ?not_found).
+                                               ?NOT_FOUND).
 
 -type option() :: {allowed_errors, allowed_errors()} |
                   {default_schema_ver, schema_ver()} |

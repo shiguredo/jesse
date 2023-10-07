@@ -131,5 +131,5 @@
 -define(external,                    'external').
 
 %%
--define(not_found, 'not_found').
--define(infinity,  'infinity').
+-define(NOT_FOUND, not_found).
+-define(INFINITY,  infinity).
