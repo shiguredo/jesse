@@ -2,9 +2,13 @@
 
 ## develop
 
-- [CHANGE] rebar.config を整理
+- [CHANGE] ci.yml を書き換え
   - @voluntas
-- [CHANGE] OTP 26.1 以上の対応に変更する
+- [CHANGE] make ci を追加
+  - @voluntas
+- [CHANGE] rebar.config を書き換え
+  - @voluntas
+- [CHANGE] OTP 26.1 以上のみの対応に書き換え
   - @voluntas
 - [CHANGE] 不要なファイル削除
   - @voluntas
