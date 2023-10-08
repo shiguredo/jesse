@@ -9,10 +9,6 @@ ci: test
 clean:
 	@./rebar3 clean
 
-.PHONY: clean-tests
-clean-tests:
-	@ rm -rf _build/test/lib
-
 # Compile
 
 bin/jesse: escript
