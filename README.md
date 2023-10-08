@@ -7,7 +7,7 @@
 
 Upstream へのマージは想定しておらず、独自で改善をしていくという方針。将来的には最新の JSON Schema に対応していきたい。
 
-## Original からの変更内容
+## 差分
 
 - jsx と rfc3339 への依存を削除
 - jsx 部分を [jsone](https://github.com/sile/jsone) に変更
@@ -21,3 +21,5 @@ Upstream へのマージは想定しておらず、独自で改善をしてい�
 - Makefile を整理
 - edoc 削除
 - docker 関連を削除
+- オリジナル README は README.original.md に移動
+- オリジナル CHANGELOG は CHANGELOG.original.md に移動
