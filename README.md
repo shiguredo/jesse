@@ -1,10 +1,13 @@
 # jesse
 
+![GitHub Actions workflow](https://github.com/shiguredo/jesse/actions/workflows/ci.yml/badge.svg)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 **時雨堂による [for-get/jesse](https://github.com/for-get/jesse) の fork**
 
 Upstream へのマージは想定しておらず、独自で改善をしていくという方針。将来的には最新の JSON Schema に対応していきたい。
 
-## Upstream との差分
+## Original からの変更内容
 
 - jsx と rfc3339 への依存を削除
 - jsx 部分を [jsone](https://github.com/sile/jsone) に変更
@@ -17,8 +20,4 @@ Upstream へのマージは想定しておらず、独自で改善をしてい�
 - applications は jsone のみに変更
 - Makefile を整理
 - edoc 削除
-
-## 方針
-
-- コードの変更は積極的に行う
-- Upstream へのマージは想定しない
+- docker 関連を削除
