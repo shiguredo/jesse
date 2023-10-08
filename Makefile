@@ -1,6 +1,6 @@
 # See LICENSE for licensing information.
 .PHONY: all
-all: ebin/jesse.app bin/jesse
+all: test
 
 .PHONY: ci
 ci: test
