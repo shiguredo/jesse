@@ -35,12 +35,6 @@
 -define(TESTS,       <<"tests">>).
 -define(VALID,       <<"valid">>).
 
--ifdef(OTP_RELEASE).  %% OTP 21+
--define(EXCEPTION(C, R, Stacktrace), C:R:Stacktrace ->).
--else.
--define(EXCEPTION(C, R, Stacktrace), C:R -> Stacktrace = erlang:get_stacktrace(),).
--endif.
-
 %%% API
 
 
@@ -50,7 +44,7 @@ get_tests(RelativeTestsDir, DefaultSchema, Config) ->
     TestFiles = filelib:wildcard(TestsDir ++ "/*.json"),
     lists:map(fun(TestFile) ->
                       {ok, Bin} = file:read_file(TestFile),
-                      Tests = jsx:decode(Bin, [{return_maps, false}]),
+                      Tests = jsone:decode(Bin, [{object_format, proplist}]),
                       Key = testfile_to_key(TestFile),
                       CaseConfig = {Tests, DefaultSchema},
                       {Key, CaseConfig}
@@ -111,11 +105,11 @@ test_schema(DefaultSchema, Opts0, Schema, SchemaTests) ->
                                           error({unexpected_error, GotErrors})
                                   end
                           catch
-                              ?EXCEPTION(C, R, Stacktrace)
-                                                          ct:pal("Error: ~p:~p~n"
-                                                                 "Stacktrace: ~p~n",
-                                                                 [C, R, Stacktrace]),
-                                                          erlang:raise(C, R, Stacktrace)
+                              C:R:Stacktrace ->
+                                  ct:pal("Error: ~p:~p~n"
+                                         "Stacktrace: ~p~n",
+                                         [C, R, Stacktrace]),
+                                  erlang:raise(C, R, Stacktrace)
                           end
                   end,
                   SchemaTests).
@@ -147,4 +141,4 @@ get_path(Key, Schema) ->
 load_schema(URI) ->
     {ok, Response} = httpc:request(get, {URI, []}, [], [{body_format, binary}]),
     {{_Line, 200, _}, _Headers, Body} = Response,
-    jsx:decode(Body, [{return_maps, false}]).
+    jsone:decode(Body, [{object_format, proplist}]).

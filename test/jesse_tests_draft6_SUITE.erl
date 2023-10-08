@@ -21,8 +21,7 @@
 
 -module(jesse_tests_draft6_SUITE).
 
--compile([export_all,
-          nowarn_export_all]).
+-compile(export_all).
 
 -define(EXCLUDED_FUNS, [module_info,
                         all,

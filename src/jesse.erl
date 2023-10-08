@@ -50,7 +50,7 @@
 
 %% Internal datastructures
 -type allowed_errors() :: non_neg_integer() |
-                          ?infinity.
+                          ?INFINITY.
 
 -type error_handler() :: fun((jesse_error:error_reason(),
                               [jesse_error:error_reason()],
@@ -80,7 +80,7 @@
 
 -type schema_loader_fun() :: fun((string()) -> {ok, schema()} |
                                                schema() |
-                                               ?not_found).
+                                               ?NOT_FOUND).
 
 -type option() :: {allowed_errors, allowed_errors()} |
                   {default_schema_ver, schema_ver()} |
@@ -108,7 +108,7 @@ main(Args) ->
 %% there is any.
 -spec add_schema(Key :: string(),
                  Schema :: schema()) -> ok |
-                                        jesse_error:error().
+                                        jesse_database:store_result().
 add_schema(Key, Schema) ->
     ValidationFun = fun jesse_lib:is_json_object/1,
     jesse_database:add(Key, Schema, ValidationFun).
@@ -120,6 +120,7 @@ add_schema(Key, Schema) ->
 -spec add_schema(Key :: string(),
                  Schema :: binary(),
                  Options :: options()) -> ok |
+                                          jesse_database:store_result() |
                                           jesse_error:error().
 add_schema(Key, Schema, Options) ->
     try

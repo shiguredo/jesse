@@ -56,7 +56,7 @@
                       ?no_extra_items_allowed |
                       ?no_extra_properties_allowed |
                       ?no_match |
-                      ?not_found |
+                      ?NOT_FOUND |
                       ?not_in_enum |
                       ?not_in_range |
                       ?not_multiple_of |
@@ -387,7 +387,7 @@ check_properties(Value, Properties, State) ->
     TmpState =
         lists:foldl(fun({PropertyName, PropertySchema}, CurrentState) ->
                             case get_value(PropertyName, Value) of
-                                ?not_found ->
+                                ?NOT_FOUND ->
                                     CurrentState;
                                 Property ->
                                     NewState = set_current_schema(
@@ -588,7 +588,7 @@ check_items_array(Value, Items, State) ->
     case NExtra > 0 of
         true ->
             case get_value(?ADDITIONALITEMS, JsonSchema) of
-                ?not_found -> State;
+                ?NOT_FOUND -> State;
                 true -> State;
                 false ->
                     handle_data_invalid(?no_extra_items_allowed, Value, State);
@@ -645,7 +645,7 @@ check_items_fun(Tuples, State) ->
 check_dependencies(Value, Dependencies, State) ->
     lists:foldl(fun({DependencyName, DependencyValue}, CurrentState) ->
                         case get_value(DependencyName, Value) of
-                            ?not_found -> CurrentState;
+                            ?NOT_FOUND -> CurrentState;
                             _ ->
                                 check_dependency_value(
                                   Value,
@@ -677,7 +677,7 @@ check_dependency_value(Value, DependencyName, Dependency, State) ->
 check_dependency(Value, Dependency, State)
   when is_binary(Dependency) ->
     case get_value(Dependency, Value) of
-        ?not_found ->
+        ?NOT_FOUND ->
             handle_data_invalid({?missing_dependency, Dependency}, Value, State);
         _ ->
             State
@@ -690,7 +690,7 @@ check_dependency(_Value, _Dependency, State) ->
 check_dependency_array(Value, DependencyName, Dependency, State) ->
     lists:foldl(fun(PropertyName, CurrentState) ->
                         case get_value(DependencyName, Value) of
-                            ?not_found ->
+                            ?NOT_FOUND ->
                                 CurrentState;
                             _Exists ->
                                 check_dependency(Value,
@@ -973,25 +973,12 @@ check_format(_Value, _Format, State) ->
     State.
 
 
--ifdef(OTP_RELEASE).
-
-
 uri_reference(Value, State) when is_binary(Value) ->
     case uri_string:parse(Value) of
         {error, _ErrorType, _Term} ->
             handle_data_invalid(?wrong_format, Value, State);
         _ -> State
     end.
-
-
--else.
-
-
-uri_reference(_Value, State) ->
-    State.
-
-
--endif.
 
 
 %% @doc 6.1. multipleOf
@@ -1039,7 +1026,7 @@ check_required(_Value, _InvalidRequired, State) ->
 
 check_required_values(_Value, [], State) -> State;
 check_required_values(Value, [PropertyName | Required], State) ->
-    case get_value(PropertyName, Value) =/= ?not_found of
+    case get_value(PropertyName, Value) =/= ?NOT_FOUND of
         'false' ->
             NewState =
                 handle_data_invalid(?missing_required_property, PropertyName, State),
@@ -1271,7 +1258,7 @@ undo_resolve_ref(State, OriginalState) ->
 %% Wrappers
 %% @private
 get_value(Key, Schema) ->
-    jesse_json_path:value(Key, Schema, ?not_found).
+    jesse_json_path:value(Key, Schema, ?NOT_FOUND).
 
 
 %% @private
@@ -1320,11 +1307,14 @@ remove_last_from_path(State) ->
 
 
 %% @private
+valid_datetime(DateTimeBin) when is_binary(DateTimeBin) ->
+    valid_datetime(binary_to_list(DateTimeBin));
 valid_datetime(DateTimeBin) ->
-    case rfc3339:parse(DateTimeBin) of
-        {ok, _} ->
-            true;
-        _ ->
+    try
+        calendar:rfc3339_to_system_time(DateTimeBin),
+        true
+    catch
+        _:_ ->
             false
     end.
 

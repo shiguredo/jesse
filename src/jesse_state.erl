@@ -133,7 +133,7 @@ new(JsonSchema, Options) ->
                                         0),
     MetaSchemaVer = jesse_json_path:value(?SCHEMA,
                                           JsonSchema,
-                                          ?default_schema_ver),
+                                          ?DEFAULT_SCHEMA_VER),
     DefaultSchemaVer = proplists:get_value(default_schema_ver,
                                            Options,
                                            MetaSchemaVer),
@@ -187,7 +187,7 @@ set_current_schema(#state{id = Id} = State, NewSchema0) ->
                 [{?REF, Ref} | lists:keydelete(?REF, 1, ListSchema)]
         end,
     IdTag = case schema_from_json(NewSchema) of
-                ?json_schema_draft6 -> ?ID;
+                ?JSON_SCHEMA_DRAFT6 -> ?ID;
                 _ -> ?ID_OLD
             end,
     NewSchemaId = jesse_json_path:value(IdTag, NewSchema, undefined),
@@ -196,8 +196,8 @@ set_current_schema(#state{id = Id} = State, NewSchema0) ->
 
 
 schema_from_json(JsonSchema) ->
-    case jesse_json_path:value(?SCHEMA, JsonSchema, ?not_found) of
-        ?not_found -> ?default_schema_ver;
+    case jesse_json_path:value(?SCHEMA, JsonSchema, ?NOT_FOUND) of
+        ?NOT_FOUND -> ?DEFAULT_SCHEMA_VER;
         SchemaVer -> SchemaVer
     end.
 
@@ -230,7 +230,7 @@ resolve_ref(State, Reference) ->
                 {State, State#state.root_schema};
             false ->
                 case load_schema(State, BaseURI) of
-                    ?not_found ->
+                    ?NOT_FOUND ->
                         jesse_error:handle_schema_invalid({?schema_not_found,
                                                            CanonicalReference},
                                                           State);
@@ -250,7 +250,7 @@ resolve_ref(State, Reference) ->
     try
         load_local_schema(set_current_schema(State1, BaseSchema), Path)
     catch
-        throw:?not_found ->
+        throw:?NOT_FOUND ->
             jesse_error:handle_schema_invalid({?schema_not_found,
                                                CanonicalReference},
                                               State1)
@@ -270,7 +270,7 @@ undo_resolve_ref(RefState, OriginalState) ->
 
 %% @doc Retrieve a specific part of a schema
 %% @private
--spec load_local_schema(Schema :: state() | ?not_found,
+-spec load_local_schema(Schema :: state() | ?NOT_FOUND,
                         Path :: [binary()]) -> not_found | jesse:json_term().
 load_local_schema(St, []) ->
     St;
@@ -278,8 +278,8 @@ load_local_schema(St, [<<>> | Keys]) ->
     load_local_schema(St, Keys);
 load_local_schema(St, [Key | Keys]) ->
     Schema = get_current_schema(St),
-    SubSchema = jesse_json_path:value(Key, Schema, ?not_found),
-    (SubSchema =/= ?not_found) orelse throw(?not_found),
+    SubSchema = jesse_json_path:value(Key, Schema, ?NOT_FOUND),
+    (SubSchema =/= ?NOT_FOUND) orelse throw(?NOT_FOUND),
     {ObjectSubSchema, Keys1} =
         case jesse_lib:is_json_object(SubSchema) of
             true ->
@@ -299,14 +299,14 @@ choose_array(SubSchema, [Key | Keys] = AllKeys) ->
                 Index ->
                     choose_array(lists:nth(Index + 1, SubSchema), Keys)
             catch
-                _:_ -> throw(?not_found)
+                _:_ -> throw(?NOT_FOUND)
             end;
         false ->
             case jesse_lib:is_json_object(SubSchema) of
                 true ->
                     {SubSchema, AllKeys};
                 false ->
-                    throw(?not_found)
+                    throw(?NOT_FOUND)
             end
     end;
 choose_array(Schema, []) ->
@@ -410,7 +410,7 @@ raw_canonical_path2([H | T], Acc) ->
 %% @doc Load a schema based on URI
 -spec load_schema(State :: state(),
                   SchemaURI :: string() | binary()) -> jesse:schema() |
-                                                       ?not_found.
+                                                       ?NOT_FOUND.
 load_schema(State, SchemaURI) when is_binary(SchemaURI) ->
     load_schema(State, unicode:characters_to_list(SchemaURI));
 load_schema(#state{schema_loader_fun = LoaderFun}, SchemaURI) ->
@@ -422,11 +422,11 @@ load_schema(#state{schema_loader_fun = LoaderFun}, SchemaURI) ->
                 true ->
                     Schema;
                 false ->
-                    ?not_found
+                    ?NOT_FOUND
             end
     catch
         _C:_E ->
-            ?not_found
+            ?NOT_FOUND
     end.
 
 
@@ -436,9 +436,6 @@ get_external_validator(#state{external_validator = Fun}) ->
 
 
 %% @private
--ifdef(OTP_RELEASE).  %% OTP 21+
-
-
 parse_ref(RefBin) ->
     Ref = unicode:characters_to_list(RefBin),
     case uri_string:parse(Ref) of
@@ -447,23 +444,3 @@ parse_ref(RefBin) ->
         _ ->
             {relative, Ref}
     end.
-
-
--else.
-
-
-parse_ref(RefBin) ->
-    Ref = unicode:characters_to_list(RefBin),
-    case http_uri:parse(Ref) of
-        %% Absolute http/s:
-        {ok, _} ->
-            {absolute, Ref};
-        %% Absolute file:
-        {error, {no_default_port, file, Ref}} ->
-            {absolute, Ref};
-        _ ->
-            {relative, Ref}
-    end.
-
-
--endif.

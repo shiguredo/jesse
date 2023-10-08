@@ -38,15 +38,11 @@
 %% Includes
 -include("jesse_schema_validator.hrl").
 
--ifdef(WORKAROUND_FOR_EFMT).
--define(IF_MAPS(A), A).
--endif.
-
 
 %%% API
-%% @doc Returns an empty list if the given value is ?not_found.
+%% @doc Returns an empty list if the given value is ?NOT_FOUND.
 -spec empty_if_not_found(Value :: any()) -> any().
-empty_if_not_found(?not_found) ->
+empty_if_not_found(?NOT_FOUND) ->
     [];
 empty_if_not_found(Value) ->
     Value.
@@ -69,15 +65,11 @@ is_array(_) ->
 %% 3) jsx format (`[{binary() | atom(), any()}]')
 %% Returns `true' if the given data is an object, otherwise `false' is returned.
 -spec is_json_object(Value :: any()) -> boolean().
-?IF_MAPS(
-  is_json_object(Map)
-  when erlang:is_map(Map) ->
-  true;)
-is_json_object({struct, Value})
-  when is_list(Value) ->
+is_json_object(Map) when is_map(Map) ->
     true;
-is_json_object({Value})
-  when is_list(Value) ->
+is_json_object({struct, Value}) when is_list(Value) ->
+    true;
+is_json_object({Value}) when is_list(Value) ->
     true;
 %% handle `jsx' empty objects
 is_json_object([{}]) ->
@@ -102,8 +94,8 @@ is_null(_Value) ->
 %% @doc Run the RE against the subject using the `re_options' from the jesse
 %% application environment. `{capture, none}' is always used.
 -spec re_run(Subject :: iodata() | unicode:charlist(),
-             RE :: iodata() | unicode:charlist()) -> match |
-                                                     nomatch.
+             RE :: iodata() | unicode:charlist()) ->
+          {match, [{integer(), integer()}]} | match | nomatch | {error, term()}.
 re_run(Subject, RE) ->
     re:run(Subject, RE, [{capture, none} | re_options()]).
 
@@ -242,7 +234,7 @@ compare_objects(Value1, Value2) ->
 compare_properties(Value1, Value2) ->
     lists:all(fun({PropertyName1, PropertyValue1}) ->
                       case get_value(PropertyName1, Value2) of
-                          ?not_found -> false;
+                          ?NOT_FOUND -> false;
                           PropertyValue2 ->
                               is_equal(PropertyValue1,
                                        PropertyValue2)
@@ -256,7 +248,7 @@ compare_properties(Value1, Value2) ->
 -spec get_schema_id_key(Schema :: jesse:json_term()) -> binary().
 get_schema_id_key(Schema) ->
     case jesse_json_path:value(?SCHEMA, Schema, undefined) of
-        ?json_schema_draft6 -> ?ID;
+        ?JSON_SCHEMA_DRAFT6 -> ?ID;
         _ -> ?ID_OLD
     end.
 
@@ -287,7 +279,7 @@ get_schema_id(Schema, Default) ->
 %% Wrappers
 %% @private
 get_value(Key, Schema) ->
-    jesse_json_path:value(Key, Schema, ?not_found).
+    jesse_json_path:value(Key, Schema, ?NOT_FOUND).
 
 
 %% @private

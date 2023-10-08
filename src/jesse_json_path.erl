@@ -6,16 +6,8 @@
 -module(jesse_json_path).
 -export([parse/1, path/2, path/3, value/3, to_proplist/1, unwrap_value/1]).
 
--ifdef(erlang_deprecated_types).
--type kvc_obj_node() :: proplist() |
-                        {struct, proplist()} |
-                        [{}] |
-                        dict() |
-                        gb_tree() |
-                        term().
--type typed_proplist() :: {proplist() | {gb_tree, gb_tree()}, elem_type()}.
--define(IF_MAPS(Exp), ).
--else.
+-export_type([proplist/0, kvc_key/0, kvc_obj/0]).
+
 -type kvc_obj_node() :: proplist() |
                         {struct, proplist()} |
                         [{}] |
@@ -27,16 +19,12 @@
                            {gb_tree, gb_trees:tree()} |
                            {map, map()},
                            elem_type()}.
--define(IF_MAPS(Exp), Exp).
--endif.
 
 -type elem_key_type() :: atom | binary | string | undefined.
 -type elem_type() :: list | elem_key_type().
 -type kvc_obj() :: kvc_obj_node() | [kvc_obj_node()] | list().
 -type kvc_key() :: binary() | atom() | string().
 -type proplist() :: [{kvc_key(), kvc_obj()}].
-
--export_type([proplist/0, kvc_key/0, kvc_obj/0]).
 
 
 %% @doc Parse a JSON Pointer
@@ -71,13 +59,13 @@ path([K | Rest], P, Default) ->
 -spec value(kvc_key(), kvc_obj(), term()) -> term().
 value(K, P, Default) ->
     case proplist_type(P) of
-        ?IF_MAPS({{map, Map}, Type} ->
-                case maps:find(normalize(K, Type), Map) of
-                  error ->
+        {{map, Map}, Type} ->
+            case maps:find(normalize(K, Type), Map) of
+                error ->
                     Default;
-                  {ok, V} ->
+                {ok, V} ->
                     V
-                end;)
+            end;
         {Nested, list} ->
             R = make_ref(),
             case get_nested_values(K, Nested, R) of
@@ -143,7 +131,7 @@ to_proplist(T) ->
 %% @doc Unwrap data (remove mochijson2 and jiffy specific constructions,
 %% and also handle `jsx' empty objects)
 -spec unwrap_value(kvc_obj()) -> kvc_obj().
-?IF_MAPS(unwrap_value(Map) when erlang:is_map(Map) -> maps:to_list(Map);)
+unwrap_value(Map) when erlang:is_map(Map) -> maps:to_list(Map);
 unwrap_value({struct, L}) -> L;
 unwrap_value({L}) -> L;
 unwrap_value({}) -> [];
