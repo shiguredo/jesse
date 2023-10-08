@@ -9,12 +9,6 @@ ci: test
 clean:
 	@./rebar3 clean
 
-.PHONY: distclean
-distclean:
-	$(MAKE) clean
-	$(RM) -r _build
-	$(RM) -r logs
-
 .PHONY: clean-tests
 clean-tests:
 	@ rm -rf _build/test/lib
