@@ -1,4 +1,3 @@
-# See LICENSE for licensing information.
 .PHONY: all
 all: test
 
@@ -65,3 +64,9 @@ cover:
 .PHONY: proper
 proper:
 	@./rebar3 as test proper
+
+## Publish
+
+.PHONY: publish
+publish:
+	@./rebar3 hex publish package
