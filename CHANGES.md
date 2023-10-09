@@ -2,6 +2,8 @@
 
 ## shiguredo
 
+- [ADD] rebar3_hex プラグインを追加
+  - @voluntas
 - [CHANGE] JSON Schema draft 6 以外は削除
   - @voluntas
 - [CHANGE] proper を master に切り替えて profile test 時のみ利用する用に変更
@@ -36,7 +38,7 @@
 
 ## 2023.1.0
 
-- [CHANGE] hex のパッケージ名を  shiguredo_jesse に変更する
+- [CHANGE] hex のパッケージ名を shiguredo_jesse に変更する
   - @sile
 - [UPDATE] efmt を適用する
   - @sile
