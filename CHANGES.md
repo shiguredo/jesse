@@ -2,6 +2,8 @@
 
 ## shiguredo
 
+## 2023.2.0
+
 - [ADD] rebar3_hex プラグインを追加
   - @voluntas
 - [CHANGE] JSON Schema draft 6 以外は削除
