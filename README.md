@@ -13,6 +13,7 @@ Upstream へのマージは想定しておらず、独自で改善をしてい�
 - jsx 部分を [jsone](https://github.com/sile/jsone) に変更
 - OTP 最新版のみに対応
 - Rebar3 最新版のみに対応
+- elvis.config に切り替え
 - JSON Schema draft 6 のみに対応
 - CI でテストが通るように修正
 - proper を master に切り替え
