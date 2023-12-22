@@ -2,6 +2,11 @@
 
 ## shiguredo
 
+- [UPDATE] CI を Erlang/OTP 26.2.1 / OpenSSL 3.2.0 に更新
+  - @voluntas
+- [UPDATE] 最小を OTP 26.2 に更新
+  - @voluntas
+
 ## 2023.2.0
 
 - [ADD] rebar3_hex プラグインを追加
