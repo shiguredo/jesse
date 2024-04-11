@@ -2,13 +2,13 @@
 
 ## shiguredo
 
+- [UPDATE] CI を Erlang/OTP 27.0-rc2 / OpenSSL 3.3.0 に更新
+  - @voluntas
+- [UPDATE] 最小を OTP 27.0 に更新
+  - @voluntas
 - [CHANGE] elvis.config に切り替え
   - @voluntas
 - [CHANGE] elvis の設定を変更
-  - @voluntas
-- [UPDATE] CI を Erlang/OTP 26.2.1 / OpenSSL 3.2.0 に更新
-  - @voluntas
-- [UPDATE] 最小を OTP 26.2 に更新
   - @voluntas
 
 ## 2023.2.0
