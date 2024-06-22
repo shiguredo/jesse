@@ -161,7 +161,7 @@ new(JsonSchema, Options) ->
 
 %% @doc Removes the last element from `current_path' in `State'.
 -spec remove_last_from_path(State :: state()) -> state().
-remove_last_from_path(State = #state{current_path = [_Property | Path]}) ->
+remove_last_from_path(#state{current_path = [_Property | Path]} = State) ->
     State#state{current_path = Path}.
 
 

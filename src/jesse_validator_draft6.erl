@@ -940,32 +940,32 @@ check_enum(Value, Enum, State) ->
 %% @doc format
 %% Used for semantic validation.
 %% @private
-check_format(Value, _Format = <<"date-time">>, State) when is_binary(Value) ->
+check_format(Value, <<"date-time">> = _Format, State) when is_binary(Value) ->
     case valid_datetime(Value) of
         true -> State;
         false -> handle_data_invalid(?wrong_format, Value, State)
     end;
-check_format(Value, _Format = <<"email">>, State) when is_binary(Value) ->
+check_format(Value, <<"email">> = _Format, State) when is_binary(Value) ->
     case jesse_lib:re_run(Value, <<"^[^@]+@[^@]+$">>) of
         match -> State;
         nomatch -> handle_data_invalid(?wrong_format, Value, State)
     end;
-check_format(Value, _Format = <<"hostname">>, State) when is_binary(Value) ->
+check_format(Value, <<"hostname">> = _Format, State) when is_binary(Value) ->
     %% not yet supported
     State;
-check_format(Value, _Format = <<"ipv4">>, State) when is_binary(Value) ->
+check_format(Value, <<"ipv4">> = _Format, State) when is_binary(Value) ->
     %% avoiding inet:parse_ipv4strict_address to maintain R15 compatibility
     case inet_parse:ipv4strict_address(binary_to_list(Value)) of
         {ok, _IPv4Address} -> State;
         {error, einval} -> handle_data_invalid(?wrong_format, Value, State)
     end;
-check_format(Value, _Format = <<"ipv6">>, State) when is_binary(Value) ->
+check_format(Value, <<"ipv6">> = _Format, State) when is_binary(Value) ->
     %% avoiding inet:parse_ipv6strict_address to maintain R15 compatibility
     case inet_parse:ipv6strict_address(binary_to_list(Value)) of
         {ok, _IPv6Address} -> State;
         {error, einval} -> handle_data_invalid(?wrong_format, Value, State)
     end;
-check_format(Value, _Format = <<"uri">>, State) when is_binary(Value) ->
+check_format(Value, <<"uri">> = _Format, State) when is_binary(Value) ->
     %% not yet supported
     State;
 check_format(Value, <<"uri-reference">>, State) when is_binary(Value) ->

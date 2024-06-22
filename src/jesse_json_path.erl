@@ -45,7 +45,7 @@ path(Path, P, Default) when is_binary(Path) ->
     path(binary:split(Path, <<".">>, [global]), P, Default);
 path(Path, P, Default) when is_atom(Path) ->
     path(atom_to_binary(Path, utf8), P, Default);
-path(Path = [N | _], P, Default) when is_integer(N) ->
+path([N | _] = Path, P, Default) when is_integer(N) ->
     path(iolist_to_binary(Path), P, Default);
 path([], [], Default) ->
     Default;
@@ -108,12 +108,12 @@ to_proplist([]) ->
     [];
 to_proplist([{}]) ->
     [];
-to_proplist(L = [{struct, _} | _]) ->
+to_proplist([{struct, _} | _] = L) ->
     to_proplist_l(L);
-to_proplist(L = [{K, _} | _]) when not is_integer(K) ->
+to_proplist([{K, _} | _] = L) when not is_integer(K) ->
     %% gb_trees is an {integer(), _}
     to_proplist_pl(L);
-to_proplist(L = [_ | _]) ->
+to_proplist([_ | _] = L) ->
     first_of(
       [fun to_proplist_gb_l/1,
        fun to_proplist_pl/1,
@@ -151,7 +151,7 @@ to_proplist_l(L) ->
     [ to_proplist(V) || V <- L ].
 
 
-to_proplist_pl(L = [{_, _} | _]) ->
+to_proplist_pl([{_, _} | _] = L) ->
     [ {K, to_proplist(V)} || {K, V} <- L ];
 to_proplist_pl([]) ->
     [].
@@ -199,7 +199,7 @@ get_nested_values(<<"@unionOfObjects">>, L, _R) ->
     L;
 get_nested_values(A, L, R) when is_atom(A) andalso A > '@' andalso A < 'A' ->
     get_nested_values(atom_to_binary(A, utf8), L, R);
-get_nested_values(K = "@" ++ _, L, R) ->
+get_nested_values("@" ++ _ = K, L, R) ->
     get_nested_values(iolist_to_binary(K), L, R);
 get_nested_values(K, [L | Rest], R) ->
     case value(K, L, R) of
@@ -213,7 +213,7 @@ get_nested_values(_K, [], _R) ->
 
 
 -spec proplist_type(term()) -> typed_proplist().
-proplist_type(P = [{K, _} | _]) ->
+proplist_type([{K, _} | _] = P) ->
     {P, typeof_elem(K)};
 proplist_type({struct, P = [{K, _} | _]}) ->
     {P, typeof_elem(K)};
