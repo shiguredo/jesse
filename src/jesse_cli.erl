@@ -93,7 +93,7 @@ jesse_run(JsonInstance, Schema, Schemata) ->
     {ok, _} = application:ensure_all_started(jesse),
     ok = add_schemata(Schemata),
     {ok, JsonInstanceBinary} = file:read_file(JsonInstance),
-    JsonInstanceJsx = jsone:decode(JsonInstanceBinary, [{object_format, proplist}]),
+    JsonInstanceJsx = jsone:decode(JsonInstanceBinary),
     jesse:validate(Schema,
                    JsonInstanceJsx).
 
@@ -102,7 +102,7 @@ add_schemata([]) ->
     ok;
 add_schemata([SchemaFile | Rest]) ->
     {ok, SchemaBin} = file:read_file(SchemaFile),
-    Schema0 = jsone:decode(SchemaBin, [{object_format, proplist}]),
+    Schema0 = jsone:decode(SchemaBin),
     Schema = maybe_fill_schema_id(SchemaFile, Schema0),
     ok = jesse:add_schema(SchemaFile, Schema),
     add_schemata(Rest).

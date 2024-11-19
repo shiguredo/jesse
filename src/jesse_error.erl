@@ -98,7 +98,7 @@ handle_schema_invalid(Info, State) ->
 
 -spec to_json(Error :: error()) -> binary().
 to_json(Error) ->
-    to_json(Error, [{indent, 2}, {space, 1}]).
+    to_json(Error, []).
 
 
 -spec to_json(Error :: error(), JsoneOptions :: [jsone:encode_option()]) -> binary().
