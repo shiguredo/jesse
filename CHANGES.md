@@ -2,9 +2,11 @@
 
 ## shiguredo
 
-- [UPDATE] CI を Erlang/OTP 27.0 / OpenSSL 3.3.1 に更新
+- [CHANGE] jsone:decode を proplist から map に変更する
   - @voluntas
-- [UPDATE] 最小を OTP 27.0 に更新
+- [UPDATE] CI を Erlang/OTP 27.1.2 / OpenSSL 3.4.0 に更新
+  - @voluntas
+- [UPDATE] 最小を OTP 27.1 に更新
   - @voluntas
 - [CHANGE] elvis.config に切り替え
   - @voluntas

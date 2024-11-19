@@ -10,7 +10,8 @@ Upstream へのマージは想定しておらず、独自で改善をしてい�
 ## 差分
 
 - jsx と rfc3339 への依存を削除
-- jsx 部分を [jsone](https://github.com/sile/jsone) に変更
+- jsx 部分を [shiguredo_jsone](https://github.com/shiguredo/jsone) に変更
+  - jsone:decode を proplist から map に変更
 - OTP 最新版のみに対応
 - Rebar3 最新版のみに対応
 - elvis.config に切り替え
@@ -27,7 +28,7 @@ Upstream へのマージは想定しておらず、独自で改善をしてい�
 
 ## ライセンス
 
-```
+```text
 Copyright 2012- Klarna AB
 Copyright 2015- AUTHORS
 Copyright 2023- Shiguredo Inc.

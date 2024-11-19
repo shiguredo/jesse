@@ -45,7 +45,7 @@ get_tests(RelativeTestsDir, DefaultSchema, Config) ->
     TestFiles = filelib:wildcard(TestsDir ++ "/*.json"),
     lists:map(fun(TestFile) ->
                       {ok, Bin} = file:read_file(TestFile),
-                      Tests = jsone:decode(Bin, [{object_format, proplist}]),
+                      Tests = jsone:decode(Bin),
                       Key = testfile_to_key(TestFile),
                       CaseConfig = {Tests, DefaultSchema},
                       {Key, CaseConfig}
@@ -142,4 +142,4 @@ get_path(Key, Schema) ->
 load_schema(URI) ->
     {ok, Response} = httpc:request(get, {URI, []}, [], [{body_format, binary}]),
     {{_Line, 200, _}, _Headers, Body} = Response,
-    jsone:decode(Body, [{object_format, proplist}]).
+    jsone:decode(Body).
