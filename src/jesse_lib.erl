@@ -61,14 +61,11 @@ is_array(_) ->
 
 %% @doc A naive check if the given data is a json object.
 %% Supports two main formats of json representation:
-%% 1) mochijson2 format (`{struct, proplist()}')
-%% 2) jiffy format (`{proplist()}')
-%% 3) jsx format (`[{binary() | atom(), any()}]')
+%% 1) jiffy format (`{proplist()}')
+%% 2) jsx format (`[{binary() | atom(), any()}]')
 %% Returns `true' if the given data is an object, otherwise `false' is returned.
 -spec is_json_object(Value :: any()) -> boolean().
 is_json_object(Map) when is_map(Map) ->
-    true;
-is_json_object({struct, Value}) when is_list(Value) ->
     true;
 is_json_object({Value}) when is_list(Value) ->
     true;
