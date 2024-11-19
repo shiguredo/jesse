@@ -2,6 +2,8 @@
 
 ## shiguredo
 
+- [CHANGE] jsone:decode を proplist から map に変更する
+  - @voluntas
 - [UPDATE] CI を Erlang/OTP 27.1.2 / OpenSSL 3.4.0 に更新
   - @voluntas
 - [UPDATE] 最小を OTP 27.1 に更新
