@@ -53,7 +53,6 @@
 -define(JESSE_ETS, jesse_ets).
 
 -include_lib("kernel/include/file.hrl").
--include("jesse_schema_validator.hrl").
 
 
 %%% API
