@@ -9,8 +9,11 @@ Upstream へのマージは想定しておらず、独自で改善をしてい�
 
 ## 差分
 
+- オリジナル README は README.original.md に移動
+- オリジナル CHANGELOG は CHANGELOG.original.md に移動
+- [efmt](https://github.com/sile/efmt) を適用
 - jsx と rfc3339 への依存を削除
-- jsx 部分を [shiguredo_jsone](https://github.com/shiguredo/jsone) に変更
+- jsx 部分を OTP 標準の json を利用した [jsone](https://github.com/shiguredo/jsone) に変更
   - jsone:decode を proplist から map に変更
 - OTP 最新版のみに対応
 - Rebar3 最新版のみに対応
@@ -18,13 +21,10 @@ Upstream へのマージは想定しておらず、独自で改善をしてい�
 - JSON Schema draft 6 のみに対応
 - CI でテストが通るように修正
 - proper を master に切り替え
-- [efmt](https://github.com/sile/efmt) を適用
-- applications は jsone のみに変更
+- applications を jsone のみに変更
 - Makefile を整理
 - edoc 削除
 - docker 関連を削除
-- オリジナル README は README.original.md に移動
-- オリジナル CHANGELOG は CHANGELOG.original.md に移動
 
 ## ライセンス
 
