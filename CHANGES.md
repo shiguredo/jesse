@@ -4,9 +4,9 @@
 
 ### misc
 
-- [UPDATE] CI を Erlang/OTP 27.2 / OpenSSL 3.4.0 に更新
+- [UPDATE] CI を Erlang/OTP 27.3 / OpenSSL 3.5.0 に更新
   - @voluntas
-- [UPDATE] 最小を OTP 27.2 に更新
+- [UPDATE] 最小を OTP 27.3 に更新
   - @voluntas
 - [UPDATE] rebar3 を 3.24.0 に更新
   - @voluntas
