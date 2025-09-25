@@ -4,11 +4,13 @@
 
 ### misc
 
-- [UPDATE] CI を Erlang/OTP 27.3 / OpenSSL 3.5.0 に更新
+- [UPDATE] CI を Erlang/OTP 28.1 / OpenSSL 3.6.0-beta1 に更新
   - @voluntas
-- [UPDATE] 最小を OTP 27.3 に更新
+- [UPDATE] 最小を OTP 28.1 に更新
   - @voluntas
-- [UPDATE] rebar3 を 3.24.0 に更新
+- [UPDATE] shiguredo_jsone を 2025.1.0 に更新
+  - @voluntas
+- [UPDATE] rebar3 を 3.25.1 に更新
   - @voluntas
 - [UPDATE] CI を Ubuntu 24.04 に更新
   - @voluntas

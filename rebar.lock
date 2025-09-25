@@ -1,8 +1,8 @@
 {"1.2.0",
-[{<<"jsone">>,{pkg,<<"shiguredo_jsone">>,<<"2024.1.0">>},0}]}.
+[{<<"jsone">>,{pkg,<<"shiguredo_jsone">>,<<"2025.1.0">>},0}]}.
 [
 {pkg_hash,[
- {<<"jsone">>, <<"23165925D552F0D4303E9AC6FDA068CEA1161BA991D3754EC8E056D481A5A4ED">>}]},
+ {<<"jsone">>, <<"462E04E388D11541C7E001A05823FDBC31132C85E2524A44CC7CC2EDE778078E">>}]},
 {pkg_hash_ext,[
- {<<"jsone">>, <<"083DB0DC88C6BAC23E3C1D67C7E922011C19E69C16057ED328A5504131EC4A63">>}]}
+ {<<"jsone">>, <<"C7A3C1CAEF5F4F9C7865BBB7CE4EA5B8E46AEB16F6D363A56B462D023D56F607">>}]}
 ].
