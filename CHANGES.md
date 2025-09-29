@@ -14,6 +14,8 @@
   - @voluntas
 - [UPDATE] CI を Ubuntu 24.04 に更新
   - @voluntas
+- [FIX] OTP 28.0 から PCRE2 を利用することになり、 `[unicode]` のみでは ASCII 文字のみマッチし、 ISO Latin-1 文字や Unicode 文字はマッチしなくなったためテストを修正する
+  - @voluntas
 
 ## 2024.1.0
 
