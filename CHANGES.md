@@ -2,6 +2,10 @@
 
 ## shiguredo
 
+## 2025.1.0
+
+機能変更無し。
+
 ### misc
 
 - [UPDATE] CI を Erlang/OTP 28.1 / OpenSSL 3.6.0-beta1 に更新
